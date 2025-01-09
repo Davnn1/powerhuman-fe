@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
+    name: 'employee-role',
     layout: 'form'
 })
 </script>

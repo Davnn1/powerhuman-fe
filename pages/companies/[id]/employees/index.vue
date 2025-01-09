@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-    layout: 'logedin'
+    name: 'employees',
+    layout: 'dashboard'
 })
 </script>
 

@@ -23,9 +23,9 @@
             <button @click="" class="w-full btn btn-primary mt-[14px]">
                 Login
             </button>
-            <RouterLink class="w-full btn btn-primary" to="/register">
+            <NuxtLink class="w-full btn btn-primary" to="/register">
                 Sign Up
-            </RouterLink>
+            </NuxtLink>
         </form>
     </section>
 </template>

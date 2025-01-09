@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {RouterLink} from 'vue-router'
 </script>
 
 <template>
@@ -27,9 +26,9 @@ import {RouterLink} from 'vue-router'
             <button @click="" class="w-full btn btn-primary mt-[14px]">
                 Register
             </button>
-            <RouterLink to="/login" class="w-full btn btn-primary">
+            <NuxtLink to="/login" class="w-full btn btn-primary">
                 Sign In
-            </RouterLink>
+            </NuxtLink>
         </form>
     </section>
 </template>
