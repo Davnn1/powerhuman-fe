@@ -1,5 +1,28 @@
 <script setup lang="ts">
+const {
+    status,
+    data,
+    lastRefreshedAt,
+    token,
+    getSession,
+    signUp,
+    signIn,
+    signOut,
+} = useAuth()
+definePageMeta({
+    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/' }
+})
+const { email, password } = reactive({
+    email: 'davin@gmail.com',
+    password: 'password',
+})
 
+const login = async () => {
+    await signIn({
+        email,
+        password,
+    })
+}
 </script>
 
 <template>
@@ -14,13 +37,13 @@
         <form class="w-full card">
             <div class="form-group">
                 <label for="" class="text-grey">Email Address</label>
-                <input type="email" class="input-field">
+                <input v-model=email :type="email" class="input-field">
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Password</label>
-                <input type="password" class="input-field">
+                <input v-model="password" type="password" class="input-field">
             </div>
-            <button @click="" class="w-full btn btn-primary mt-[14px]">
+            <button @click="login" class="w-full btn btn-primary mt-[14px]">
                 Login
             </button>
             <NuxtLink class="w-full btn btn-primary" to="/register">
