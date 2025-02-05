@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  spaLoadingTemplate: true,
+  spaLoadingTemplate: false,
   css: ['~/assets/css/main.css'],
 
   postcss: {
@@ -31,7 +31,7 @@ export default defineNuxtConfig({
         getSession: { path: '/user', method: 'get' },
       },
       session: {
-        dataResponsePointer: '/result/user',
+        dataResponsePointer: '/result',
         dataType: {
           id: 'string | number',
           name: 'string',

@@ -17,11 +17,19 @@ const { email, password } = reactive({
     password: 'password',
 })
 
-const login = async () => {
-    await signIn({
-        email,
-        password,
-    })
+const login = async (e: MouseEvent) => {
+    try {
+        e.preventDefault()
+        let res = await signIn(
+            {
+                email,
+                password,
+            }, { callbackUrl: '/' }
+        )
+        console.log("res", res);
+    } catch (error) {
+        console.log("error", error);
+    }
 }
 </script>
 

@@ -1,4 +1,17 @@
 <script setup lang="ts">
+const {
+    status,
+    data,
+    lastRefreshedAt,
+    token,
+} = useAuth()
+
+onMounted(() => {
+    console.log(status)
+    console.log(data.value?.id)
+    console.log(lastRefreshedAt)
+    console.log(token)
+})
 </script>
 
 <template>
