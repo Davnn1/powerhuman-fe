@@ -17,9 +17,8 @@ const { email, password } = reactive({
     password: 'password',
 })
 
-const login = async (e: MouseEvent) => {
+const login = async () => {
     try {
-        e.preventDefault()
         let res = await signIn(
             {
                 email,
@@ -51,7 +50,7 @@ const login = async (e: MouseEvent) => {
                 <label for="" class="text-grey">Password</label>
                 <input v-model="password" type="password" class="input-field">
             </div>
-            <button @click="login" class="w-full btn btn-primary mt-[14px]">
+            <button @click.prevent="login" class="w-full btn btn-primary mt-[14px]">
                 Login
             </button>
             <NuxtLink class="w-full btn btn-primary" to="/register">

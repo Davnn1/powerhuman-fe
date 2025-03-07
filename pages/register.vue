@@ -2,6 +2,33 @@
 definePageMeta({
     auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/' }
 })
+
+const {
+    status,
+    data,
+    lastRefreshedAt,
+    token,
+    getSession,
+    signUp,
+    signIn,
+    signOut,
+} = useAuth()
+definePageMeta({
+    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/' }
+})
+const { name, email, password } = reactive({
+    name: 'Davin',
+    email: 'davin1@gmail.com',
+    password: 'password',
+})
+
+const register = async () => {
+    await signUp({
+        email,
+        password,
+        name,
+    }, { callbackUrl: '/', redirect: true }, { preventLoginFlow: true })
+}
 </script>
 
 <template>
@@ -15,18 +42,18 @@ definePageMeta({
         </p>
         <form class="w-full card">
             <div class="form-group">
-                <label for="" class="text-grey">Company Name</label>
-                <input type="text" class="input-field">
+                <label for="" class="text-grey">Name</label>
+                <input type="text" v-model="name" class="input-field">
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Email Address</label>
-                <input type="email" class="input-field">
+                <input type="email" v-model="email" class="input-field">
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Password</label>
-                <input type="password" class="input-field">
+                <input type="password" v-model="password"  class="input-field">
             </div>
-            <button @click="" class="w-full btn btn-primary mt-[14px]">
+            <button @click.prevent="register" class="w-full btn btn-primary mt-[14px]">
                 Register
             </button>
             <NuxtLink to="/login" class="w-full btn btn-primary">
