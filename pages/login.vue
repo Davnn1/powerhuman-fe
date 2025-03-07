@@ -51,6 +51,7 @@ const login = async () => {
             <button @click.prevent="login" class="w-full btn btn-primary mt-[14px]">
                 Login
             </button>
+            <div class="text-center">or</div>
             <NuxtLink class="w-full btn btn-primary" to="/register">
                 Sign Up
             </NuxtLink>

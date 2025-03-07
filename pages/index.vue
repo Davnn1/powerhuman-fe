@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {useMyFetch} from '~/composable/useMyFetch'
+import {usePreFetch} from '~/composable/usePreFetch'
 import type { CompanyResponse } from '~/types/company'
 
 const selectedCompany = ref()
-const { data:companies } = await useMyFetch<CompanyResponse>('/company')
+const { data:companies } = await usePreFetch<CompanyResponse>('/company')
 const router = useRouter()
 
 const openCompany = () => {
@@ -37,7 +37,7 @@ const openCompany = () => {
                 Continue
             </button>
             <div class="text-center">or</div>
-            <NuxtLink class="w-full border btn btn-white">
+            <NuxtLink to="/companies/create" class="w-full border btn btn-white">
                 Create New Company
             </NuxtLink>
         </div>
