@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import {useRouter} from 'vue-router'
-
 definePageMeta({
     auth: {unauthenticatedOnly: true, navigateAuthenticatedTo: '/'}
 })

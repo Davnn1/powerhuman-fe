@@ -12,17 +12,15 @@ const {
 definePageMeta({
     auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/' }
 })
-const { email, password } = reactive({
-    email: 'davin@gmail.com',
-    password: 'password',
-})
+const email = ref('');
+const password = ref('password');
 
 const login = async () => {
     try {
         let res = await signIn(
             {
-                email,
-                password,
+                email: email.value,
+                password: password.value,
             }, { callbackUrl: '/' }
         )
         console.log("res", res);

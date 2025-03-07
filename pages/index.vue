@@ -1,17 +1,17 @@
 <script setup lang="ts">
-const {
-    status,
-    data,
-    lastRefreshedAt,
-    token,
-} = useAuth()
+import {useMyFetch} from '~/composable/useMyFetch'
+import type { CompanyResponse } from '~/types/company'
 
-onMounted(() => {
-    console.log(status)
-    console.log(data.value?.id)
-    console.log(lastRefreshedAt)
-    console.log(token)
-})
+const selectedCompany = ref()
+const { data:companies } = await useMyFetch<CompanyResponse>('/company')
+const router = useRouter()
+
+const openCompany = () => {
+    router.push({
+        name: 'companies-id',
+        params: { id: selectedCompany.value }
+    })
+}
 </script>
 
 <template>
@@ -21,19 +21,19 @@ onMounted(() => {
             <div class="form-group">
                 <label for="" class="text-grey">Companies</label>
 
-                <p v-if="true">Fetching companies...</p>
-                <!--                <select v-else-->
-                <!--                        v-model=""-->
-                <!--                        name="companies"-->
-                <!--                        id=""-->
-                <!--                        class="appearance-none input-field form-icon-chevron_down"-->
-                <!--                >-->
-                <!--                    <option :value="company.id" v-for="company in companies.data.result.data">-->
-                <!--                        {{ company.name }}-->
-                <!--                    </option>-->
-                <!--                </select>-->
+                <p v-if="companies == undefined">Fetching companies...</p>
+                <select v-else
+                        v-model="selectedCompany"
+                        name="companies"
+                        id=""
+                        class="appearance-none input-field form-icon-chevron_down"
+                >
+                    <option :value="company.id" v-for="company in companies.result.data">
+                        {{ company.name }}
+                    </option>
+                </select>
             </div>
-            <button @click="" type="button" class="w-full btn btn-primary mt-[14px]">
+            <button @click="openCompany" type="button" class="w-full btn btn-primary mt-[14px]">
                 Continue
             </button>
             <div class="text-center">or</div>
