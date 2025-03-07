@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import {useRouter} from 'vue-router'
+
 definePageMeta({
-    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/' }
+    auth: {unauthenticatedOnly: true, navigateAuthenticatedTo: '/'}
 })
 
 const {
@@ -13,10 +15,10 @@ const {
     signIn,
     signOut,
 } = useAuth()
-definePageMeta({
-    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/' }
-})
-const { name, email, password } = reactive({
+
+const router = useRouter()
+
+const {name, email, password} = reactive({
     name: 'Davin',
     email: 'davin1@gmail.com',
     password: 'password',
@@ -27,7 +29,8 @@ const register = async () => {
         email,
         password,
         name,
-    }, { callbackUrl: '/', redirect: true }, { preventLoginFlow: true })
+    }, undefined, {preventLoginFlow: true})
+    await router.push('/login')
 }
 </script>
 
@@ -40,7 +43,7 @@ const register = async () => {
         <p class="mt-4 text-base leading-7 text-center mb-[50px] text-grey">
             Manage your employees to achieve <br> a bigger goals for your company
         </p>
-        <form class="w-full card">
+        <form class="w-full card" @submit.prevent="register">
             <div class="form-group">
                 <label for="" class="text-grey">Name</label>
                 <input type="text" v-model="name" class="input-field">
@@ -51,9 +54,9 @@ const register = async () => {
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Password</label>
-                <input type="password" v-model="password"  class="input-field">
+                <input type="password" v-model="password" class="input-field">
             </div>
-            <button @click.prevent="register" class="w-full btn btn-primary mt-[14px]">
+            <button type="submit" class="w-full btn btn-primary mt-[14px]">
                 Register
             </button>
             <NuxtLink to="/login" class="w-full btn btn-primary">
