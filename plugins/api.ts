@@ -2,6 +2,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     const {
         token,
     } = useAuth()
+
     const config = useRuntimeConfig()
 
     const api = $fetch.create({

@@ -7,7 +7,7 @@ const router = useRouter()
 const { $api } = useNuxtApp()
 
 async function handleCreateCompany() {
-     const res = await $api('/company', {
+     const res = await $api<ApiResponse<Company>>('/company', {
         method: 'POST',
         body: {
            name : company.value.name,

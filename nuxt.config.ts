@@ -1,11 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
+  vite: false,
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
   spaLoadingTemplate: false,
   css: ['~/assets/css/main.css'],
-
+  imports: {
+    dirs: ['types/*.ts', 'store/*.ts', 'types/**/*.ts'],
+  },
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -47,14 +49,6 @@ export default defineNuxtConfig({
       },
       token: {
         signInResponseTokenPointer: '/result/access_token',
-        type: 'Bearer',
-        cookieName: 'auth.token',
-        headerName: 'Authorization',
-        maxAgeInSeconds: 1800,
-        sameSiteAttribute: 'lax',
-        cookieDomain: '',
-        secureCookieAttribute: false,
-        httpOnlyCookieAttribute: false,
       },
       pages: {
         login: '/login',

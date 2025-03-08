@@ -4,14 +4,7 @@ definePageMeta({
 })
 
 const {
-    status,
-    data,
-    lastRefreshedAt,
-    token,
-    getSession,
     signUp,
-    signIn,
-    signOut,
 } = useAuth()
 
 const router = useRouter()

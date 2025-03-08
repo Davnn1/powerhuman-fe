@@ -1,9 +1,3 @@
-export interface Meta {
-    code: number
-    status: string
-    message: string
-}
-
 export interface User {
     id: number
     name: string
@@ -31,13 +25,7 @@ export interface Company {
     users: User[]
 }
 
-export interface PaginationLink {
-    url: string | null
-    label: string
-    active: boolean
-}
-
-export interface Result {
+export interface CompanyFetchResult {
     current_page: number
     data: Company[]
     first_page_url: string
@@ -51,9 +39,4 @@ export interface Result {
     prev_page_url: string | null
     to: number
     total: number
-}
-
-export interface CompanyResponse {
-    meta: Meta
-    result: Result
 }

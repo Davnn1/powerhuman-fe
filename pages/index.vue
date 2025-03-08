@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import {usePreFetch} from '~/composable/usePreFetch'
-import type { CompanyResponse } from '~/types/company'
-
 const selectedCompany = ref()
-const { data:companies } = await usePreFetch<CompanyResponse>('/company')
+const { data:companies } = await usePreFetch<ApiResponse<CompanyFetchResult>>('/company',{
+    params: {
+        limit: 100
+    }
+})
 const router = useRouter()
 
 const openCompany = () => {

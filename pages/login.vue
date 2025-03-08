@@ -1,29 +1,21 @@
 <script setup lang="ts">
 const {
-    status,
-    data,
-    lastRefreshedAt,
-    token,
-    getSession,
-    signUp,
     signIn,
-    signOut,
 } = useAuth()
 definePageMeta({
-    auth: { unauthenticatedOnly: true, navigateAuthenticatedTo: '/' }
+    auth: {unauthenticatedOnly: true, navigateAuthenticatedTo: '/'}
 })
 const email = ref('');
 const password = ref('password');
 
 const login = async () => {
     try {
-        let res = await signIn(
+        await signIn(
             {
                 email: email.value,
                 password: password.value,
-            }, { callbackUrl: '/' }
+            }, {callbackUrl: '/'}
         )
-        console.log("res", res);
     } catch (error) {
         console.log("error", error);
     }
