@@ -34,6 +34,10 @@ async function handleCreateCompany() {
             <button type="submit" class="w-full btn btn-primary mt-[14px]">
                 Save
             </button>
+            <div class="text-center">or</div>
+            <NuxtLink class="w-full btn btn-primary" to="/">
+                Back
+            </NuxtLink>
         </form>
     </section>
 </template>
