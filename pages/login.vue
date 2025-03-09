@@ -5,7 +5,7 @@ const {
 definePageMeta({
     auth: {unauthenticatedOnly: true, navigateAuthenticatedTo: '/'}
 })
-const email = ref('');
+const email = ref('memberbaru@gmail.com');
 const password = ref('password');
 
 const login = async () => {

@@ -6,15 +6,18 @@ definePageMeta({
     layout: 'dashboard'
 })
 const route = useRoute()
-const { $api } = useNuxtApp()
+const {$api} = useNuxtApp()
 
-const { data: teams } = await useAsyncData<ApiResponse<TeamFetchResult>>('team', async () => {
+const {data: teams} = await useAsyncData<ApiResponse<TeamFetchResult>>('team', async () => {
     return $api('/team', {
         params: {
             company_id: route.params.id
         }
     });
-}, { server: false });
+}, {
+    lazy: true,
+    server: false
+});
 </script>
 
 <template>
@@ -60,8 +63,9 @@ const { data: teams } = await useAsyncData<ApiResponse<TeamFetchResult>>('team',
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:gap-10 lg:gap-3" >
-                <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0"v-for="team in teams?.result.data" :key="team.id">
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:gap-10 lg:gap-3">
+                <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0" v-for="team in teams?.result.data"
+                     :key="team.id">
                     <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
                     <img :src="team.icon" alt="">
                     <div class="mt-6 mb-1 font-semibold text-center text-dark">

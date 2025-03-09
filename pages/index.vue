@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const selectedCompany = ref()
-const { data:companies } = await usePreFetch<ApiResponse<CompanyFetchResult>>('/company',{
+const { data:companies, status } = await usePreFetch<ApiResponse<CompanyFetchResult>>('/company',{
     params: {
         limit: 100
-    }
+    },
+    lazy: true,
 })
 const router = useRouter()
 
@@ -22,7 +23,7 @@ const openCompany = () => {
             <div class="form-group">
                 <label for="" class="text-grey">Companies</label>
 
-                <p v-if="companies == undefined">Fetching companies...</p>
+                <p v-if="status == 'pending'">Fetching companies...</p>
                 <select v-else
                         v-model="selectedCompany"
                         name="companies"
