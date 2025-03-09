@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type {TeamFetchResult} from "~/types/teams";
-import type {EmployeeFetchResult} from "~/types/employee";
+import type {Pagination} from "~/types/generalResponse";
 
 definePageMeta({
     name: 'employees',
@@ -8,7 +7,7 @@ definePageMeta({
 })
 const {$api} = useNuxtApp()
 
-const {data: employees} = await useAsyncData<ApiResponse<EmployeeFetchResult>>('employee', async () => {
+const {data: employees} = await useAsyncData<ApiResponse<Pagination<Employee[]>>>('employee', async () => {
     return $api('/employee',{
         params: {
             with_role: true

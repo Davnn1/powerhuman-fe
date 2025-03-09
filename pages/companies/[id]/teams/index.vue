@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type {TeamFetchResult} from "~/types/teams";
-
 definePageMeta({
     name: 'teams',
     layout: 'dashboard'
@@ -8,7 +6,7 @@ definePageMeta({
 const route = useRoute()
 const {$api} = useNuxtApp()
 
-const {data: teams} = await useAsyncData<ApiResponse<TeamFetchResult>>('team', async () => {
+const {data: teams} = await useAsyncData<ApiResponse<Pagination<Team[]>>>('team', async () => {
     return $api('/team', {
         params: {
             company_id: route.params.id

@@ -1,8 +1,24 @@
 <script setup lang="ts">
+import type {Pagination} from "~/types/generalResponse";
+import type {Role} from "~/types/role";
+
 definePageMeta({
     name: 'roles',
     layout: 'dashboard'
-})</script>
+})
+const {$api} = useNuxtApp()
+
+const {data: roles} = await useAsyncData<ApiResponse<Pagination<Role[]>>>('role', async () => {
+    return $api('/role',{
+        params: {
+            with_responsibility: true
+        }
+    });
+}, {
+    lazy: true,
+    server: false
+});
+</script>
 
 <template>
     <div class="lg:pr-[70px] py-[50px] lg:ml-[320px] xl:ml-[365px] px-4 lg:pl-0">
@@ -48,63 +64,15 @@ definePageMeta({
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
-                <div class="items-center card !flex-row gap-4">
+                <div class="items-center card !flex-row gap-4" v-for="role in roles?.result.data" :key="role.id">
                     <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
                     <img src="/assets/svgs/ric-flag.svg" alt="">
                     <div>
                         <div class="mb-1 font-semibold text-dark">
-                            Product Designer
+                            {{role.name}}
                         </div>
                         <p class="text-grey">
-                            12 people assigned
-                        </p>
-                    </div>
-                </div>
-                <div class="items-center card !flex-row gap-4">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-flag.svg" alt="">
-                    <div>
-                        <div class="mb-1 font-semibold text-dark">
-                            iOS Engineer
-                        </div>
-                        <p class="text-grey">
-                            12 people assigned
-                        </p>
-                    </div>
-                </div>
-                <div class="items-center card !flex-row gap-4">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-flag.svg" alt="">
-                    <div>
-                        <div class="mb-1 font-semibold text-dark">
-                            Marketing
-                        </div>
-                        <p class="text-grey">
-                            12 people assigned
-                        </p>
-                    </div>
-                </div>
-                <div class="items-center card !flex-row gap-4">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-flag.svg" alt="">
-                    <div>
-                        <div class="mb-1 font-semibold text-dark">
-                            DevOps Power
-                        </div>
-                        <p class="text-grey">
-                            12 people assigned
-                        </p>
-                    </div>
-                </div>
-                <div class="items-center card !flex-row gap-4">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-flag.svg" alt="">
-                    <div>
-                        <div class="mb-1 font-semibold text-dark">
-                            Quality Assurance
-                        </div>
-                        <p class="text-grey">
-                            12 people assigned
+                            {{role.employees_count}} people assigned
                         </p>
                     </div>
                 </div>
