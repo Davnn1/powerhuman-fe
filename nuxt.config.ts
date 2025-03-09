@@ -1,13 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
-  vite: false,
   compatibilityDate: '2024-11-01',
   spaLoadingTemplate: false,
   css: ['~/assets/css/main.css'],
+
   imports: {
     dirs: ['types/*.ts', 'store/*.ts', 'types/**/*.ts'],
   },
+
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -16,14 +17,19 @@ export default defineNuxtConfig({
   },
 
   modules: ['@sidebase/nuxt-auth'],
+
   runtimeConfig: {
     public: {
       baseURL: process.env.NUXT_API_URL || '/api'
     }
   },
+
   auth: {
     baseURL: process.env.NUXT_API_URL,
     globalAppMiddleware: true,
+    sessionRefresh: {
+      enableOnWindowFocus: false,
+    },
     provider: {
       type: 'local',
       endpoints: {
@@ -54,4 +60,11 @@ export default defineNuxtConfig({
         login: '/login',
       }
     }
-  }})
+  },
+
+  devtools: {
+    timeline: {
+      enabled: true
+    }
+  }
+})
