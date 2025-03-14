@@ -8,3 +8,12 @@ export interface Team {
     updated_at: string;
     employees_count: string;
 }
+
+export interface CreateTeam {
+    name: string;
+    icon: string | null;
+    company_id: string;
+    updated_at: string;
+    created_at: string;
+    id: number;
+}

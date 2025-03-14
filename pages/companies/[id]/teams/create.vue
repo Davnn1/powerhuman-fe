@@ -1,8 +1,35 @@
 <script setup lang="ts">
+import type {CreateTeam} from "~/types/team";
+
 definePageMeta({
     name: 'team-create',
     layout: 'form'
 })
+
+const {
+    data,
+} = useAuth()
+
+const email = computed(() => data.value?.email || '')
+const router = useRouter()
+const route = useRoute()
+const { $api } = useNuxtApp()
+
+const name = ref('memberbaru@gmail.com');
+const companyId = route.params.id
+
+async function handleCreateTeam() {
+    await $api<ApiResponse<CreateTeam>>('/team', {
+        method: 'POST',
+        body: {
+            company_id: companyId,
+            name: name.value
+        }
+    })
+    await router.push({
+        name: 'teams',
+    })
+}
 </script>
 
 <template>
@@ -19,13 +46,13 @@ definePageMeta({
                 <img src="/assets/svgs/ric-box.svg" alt="">
             </div>
             <div class="form-group">
-                <label for="" class="text-grey">Email Address</label>
-                <input type="email" class="input-field disabled:bg-grey disabled:outline-none"
-                       value="angga@yourcompany.com" disabled>
+                <label for="email" class="text-grey">Email Address</label>
+                <input type="email" id="email" class="input-field disabled:bg-grey disabled:outline-none"
+                       v-model="email" disabled>
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Team Name</label>
-                <input type="text" class="input-field" value="Growth Marketing">
+                <input type="text" class="input-field" v-model="name">
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Status</label>
@@ -34,7 +61,7 @@ definePageMeta({
                     <option value="">Inactive</option>
                 </select>
             </div>
-            <a href="my_teams.html" class="w-full btn btn-primary mt-[14px]">
+            <a @click.prevent="handleCreateTeam" class="w-full btn btn-primary mt-[14px]">
                 Continue
             </a>
         </form>

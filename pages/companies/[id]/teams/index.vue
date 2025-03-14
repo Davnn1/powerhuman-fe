@@ -57,7 +57,9 @@ const {data: teams} = await useAsyncData<ApiResponse<Pagination<Team[]>>>('team'
                         </div>
                         <p class="text-grey">Empower company</p>
                     </div>
-                    <NuxtLink to="/companies/[id]/teams/create" class="btn btn-primary">Build New Team</NuxtLink>
+                    <NuxtLink :to="{ name: 'team-create', params: { id: route.params.id } }" class="btn btn-primary">
+                        Build New Team
+                    </NuxtLink>
                 </div>
             </div>
 
