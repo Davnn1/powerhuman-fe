@@ -19,7 +19,7 @@ const { signOut } = useAuth()
             </div>
             <div class="flex flex-col gap-4">
                 <div class="text-sm text-grey">Daily Use</div>
-                <NuxtLink to="/" class="nav-link" exact-active-class="active">
+                <NuxtLink :to="{ name: 'companies-id' }" class="nav-link" exact-active-class="active">
                     <img src="/assets/svgs/ic-grid.svg" alt="">
                     Overview
                 </NuxtLink>
