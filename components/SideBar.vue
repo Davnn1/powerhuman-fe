@@ -19,19 +19,19 @@ const { signOut } = useAuth()
             </div>
             <div class="flex flex-col gap-4">
                 <div class="text-sm text-grey">Daily Use</div>
-                <NuxtLink to="/" class="nav-link active">
+                <NuxtLink to="/" class="nav-link" exact-active-class="active">
                     <img src="/assets/svgs/ic-grid.svg" alt="">
                     Overview
                 </NuxtLink>
-                <NuxtLink :to="{ name: 'employees' }" class="nav-link">
+                <NuxtLink :to="{ name: 'employees' }" class="nav-link" exact-active-class="active">
                     <img src="/assets/svgs/ic-users.svg" alt="">
                     Employees
                 </NuxtLink>
-                <NuxtLink :to="{ name: 'teams' }" class="nav-link">
+                <NuxtLink :to="{ name: 'teams' }" class="nav-link" exact-active-class="active">
                     <img src="/assets/svgs/ic-briefcase.svg" alt="">
                     My Teams
                 </NuxtLink>
-                <NuxtLink :to="{ name: 'roles' }" class="nav-link">
+                <NuxtLink :to="{ name: 'roles' }" class="nav-link" exact-active-class="active">
                     <img src="/assets/svgs/ic-flag.svg" alt="">
                     Roles
                 </NuxtLink>
