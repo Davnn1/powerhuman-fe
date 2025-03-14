@@ -17,3 +17,11 @@ export interface Role {
     employees_count: string;
     responsibilities: Responsibility[] | undefined;
 }
+
+export interface CreateRole {
+    name: string;
+    company_id: string;
+    updated_at: string;
+    created_at: string;
+    id: number;
+}

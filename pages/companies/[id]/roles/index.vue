@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import type {Pagination} from "~/types/generalResponse";
-import type {Role} from "~/types/role";
-
 definePageMeta({
     name: 'roles',
     layout: 'dashboard'
 })
 const {$api} = useNuxtApp()
+const route = useRoute()
 
 const {data: roles} = await useAsyncData<ApiResponse<Pagination<Role[]>>>('role', async () => {
     return $api('/role',{
@@ -59,7 +57,9 @@ const {data: roles} = await useAsyncData<ApiResponse<Pagination<Role[]>>>('role'
                         </div>
                         <p class="text-grey">Empower company</p>
                     </div>
-                    <a href="roles-create.html" class="btn btn-primary">New Role</a>
+                    <NuxtLink :to="{ name: 'role-create', params: { id: route.params.id } }" class="btn btn-primary">
+                        New Role
+                    </NuxtLink>
                 </div>
             </div>
 

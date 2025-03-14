@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const goBack = () => {
-    window.history.back();
+    history.back();
 };
 </script>
 

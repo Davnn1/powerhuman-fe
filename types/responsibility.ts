@@ -6,3 +6,11 @@ export interface Responsibility {
     created_at: string;
     updated_at: string;
 }
+
+export interface CreateResponsibility {
+    name: string;
+    role_id: string;
+    updated_at: string;
+    created_at: string;
+    id: number;
+}

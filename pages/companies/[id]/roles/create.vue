@@ -1,8 +1,66 @@
 <script setup lang="ts">
+import type {CreateRole} from "~/types/role";
+import type {CreateResponsibility} from "~/types/responsibility";
+
 definePageMeta({
     name: 'role-create',
     layout: 'form'
-})
+});
+
+const { $api } = useNuxtApp();
+const router = useRouter();
+const route = useRoute()
+
+const roleName = ref('');
+const responsibilities = ref<string[]>(['']);
+const isSubmitting = ref(false);
+
+const addResponsibility = () => {
+    responsibilities.value.push('');
+};
+
+const removeResponsibility = (index: number) => {
+    if (responsibilities.value.length > 1) {
+        responsibilities.value.splice(index, 1);
+    }
+};
+
+const saveRole = async () => {
+    if (!roleName.value.trim()) {
+        alert('Role Name is required');
+        return;
+    }
+
+    isSubmitting.value = true;
+    try {
+        const roleResponse = await $api<ApiResponse<CreateRole>>('/role', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: { name: roleName.value, company_id: route.params.id }
+        });
+
+        const roleId = roleResponse?.result?.id;
+        if (roleId) {
+            for (const responsibility of responsibilities.value) {
+                if (responsibility.trim()) {
+                    await $api<ApiResponse<CreateResponsibility>>('/responsibility', {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        body: { name: responsibility, role_id: roleId }
+                    });
+                }
+            }
+        }
+
+        alert('Role and responsibilities saved successfully!');
+        await router.push({name: 'roles'});
+    } catch (error) {
+        console.error('Error saving role:', error);
+        alert('Failed to save role. Please try again.');
+    } finally {
+        isSubmitting.value = false;
+    }
+};
 </script>
 
 <template>
@@ -14,29 +72,31 @@ definePageMeta({
             Manage your employees to achieve <br>
             a bigger goals for your company
         </p>
-        <form class="w-full card">
+        <form class="w-full card" @submit.prevent="saveRole">
             <div class="form-group">
-                <label for="" class="text-grey">Role Name</label>
-                <input type="text" class="input-field" value="Product Marketing">
+                <label for="roleName" class="text-grey">Role Name</label>
+                <input id="roleName" type="text" class="input-field" v-model="roleName" required>
             </div>
             <div class="form-group">
-                <label for="idRes" class="text-grey">Responsibility</label>
-                <ul id="listResp" class="flex flex-col gap-4">
-                    <li class="inline-flex items-center w-full gap-5">
-                        <input type="text" id="idRes" name="responsibility" class="w-full input-field">
-                        <a href="#" role="button" id="addRsp">
-                            <img src="/assets/svgs/ric-plus.svg" alt="">
-                        </a>
+                <label class="text-grey">Responsibility</label>
+                <ul class="flex flex-col gap-4">
+                    <li v-for="(index) in responsibilities" :key="index" class="inline-flex items-center w-full gap-5">
+                        <input type="text" class="w-full input-field" v-model="responsibilities[index]">
+                        <button type="button" @click="addResponsibility" v-if="index === responsibilities.length - 1">
+                            <img src="/assets/svgs/ric-plus.svg" alt="Add">
+                        </button>
+                        <button type="button" @click="removeResponsibility(index)" v-if="responsibilities.length > 1">
+                            <img src="/assets/svgs/ric-close-red.svg" alt="Remove">
+                        </button>
                     </li>
                 </ul>
             </div>
-            <a href="roles.html" class="w-full btn btn-primary mt-[14px]">
-                Save Role
-            </a>
+            <button type="submit" class="w-full btn btn-primary mt-[14px]" :disabled="isSubmitting">
+                {{ isSubmitting ? 'Saving...' : 'Save Role' }}
+            </button>
         </form>
     </section>
 </template>
 
 <style scoped>
-
 </style>
