@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   imports: {
-    dirs: ['types/*.ts', 'store/*.ts', 'types/**/*.ts'],
+    dirs: ['types/*.ts', 'stores/*.ts', 'types/**/*.ts'],
   },
 
   postcss: {
@@ -16,8 +16,10 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@sidebase/nuxt-auth'],
-
+  modules: ['@sidebase/nuxt-auth', '@pinia/nuxt'],
+  pinia: {
+    storesDirs: ['stores/**'],
+  },
   runtimeConfig: {
     public: {
       baseURL: process.env.NUXT_API_URL || '/api'

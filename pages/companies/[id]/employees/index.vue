@@ -17,6 +17,8 @@ const {data: employees} = await useAsyncData<ApiResponse<Pagination<Employee[]>>
     lazy: true,
     server: false
 });
+
+const route = useRoute()
 </script>
 
 <template>
@@ -58,7 +60,9 @@ const {data: employees} = await useAsyncData<ApiResponse<Pagination<Employee[]>>
                         </div>
                         <p class="text-grey">Your team powers</p>
                     </div>
-                    <a href="employee_create.html" class="btn btn-primary">Add Employee</a>
+                    <NuxtLink :to="{ name: 'employee-create', params: { id: route.params.id } }" class="btn btn-primary">
+                        Add Employee
+                    </NuxtLink>
                 </div>
             </div>
 

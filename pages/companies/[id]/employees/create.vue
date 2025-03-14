@@ -3,6 +3,7 @@ definePageMeta({
     name: 'employee-create',
     layout: 'form'
 })
+const employeeStore = useEmployeeStore()
 </script>
 
 <template>
@@ -17,26 +18,26 @@ definePageMeta({
         <form class="w-full card">
             <div class="form-group">
                 <label for="" class="text-grey">Complete Name</label>
-                <input type="text" class="input-field">
+                <input v-model="employeeStore.employeePayload.name" type="text" class="input-field">
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Email Address</label>
-                <input type="email" class="input-field">
+                <input v-model="employeeStore.employeePayload.email" type="email" class="input-field">
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Gender</label>
-                <select name="" id="" class="appearance-none input-field form-icon-chevron_down">
-                    <option value="" selected>Male</option>
-                    <option value="">Female</option>
+                <select v-model="employeeStore.employeePayload.gender" name="" id="" class="appearance-none input-field form-icon-chevron_down">
+                    <option value="MALE" selected>Male</option>
+                    <option value="FEMALE">Female</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Age</label>
-                <input type="number" class="input-field">
+                <input v-model="employeeStore.employeePayload.age" type="number" class="input-field">
             </div>
-            <a href="employee_create-2.html" class="w-full btn btn-primary mt-[14px]">
+            <NuxtLink :to="{ name: 'employee-role'}" class="w-full btn btn-primary mt-[14px]">
                 Continue
-            </a>
+            </NuxtLink>
         </form>
     </section>
 </template>

@@ -3,6 +3,23 @@ definePageMeta({
     name: 'employee-team',
     layout: 'form'
 })
+const route = useRoute()
+const {$api} = useNuxtApp()
+const employeeStore = useEmployeeStore()
+const {data: teams} = await useAsyncData<ApiResponse<Pagination<Team[]>>>('team', async () => {
+    return $api('/team', {
+        params: {
+            company_id: route.params.id
+        }
+    });
+}, {
+    lazy: true,
+    server: false
+});
+
+const employeeTeam= ( teamId: number) => {
+    employeeStore.employeePayload.team_id = teamId
+}
 </script>
 
 <template>
@@ -19,15 +36,15 @@ definePageMeta({
                 <img src="/assets/images/user-f-1.png" width="70" alt="">
                 <div>
                     <div class="text-lg font-semibold">
-                        Andini Danna
+                        {{ employeeStore.employeePayload.name }}
                     </div>
                     <p class="text-base text-grey">
-                        ke@manasihhbang.com
+                        {{ employeeStore.employeePayload.email }}
                     </p>
                 </div>
             </div>
             <p class="text-right text-grey">
-                Product Designer
+                {{ employeeStore.employeeRole }}
             </p>
         </div>
 
@@ -47,55 +64,22 @@ definePageMeta({
 
             <form>
                 <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:gap-10 lg:gap-3 mb-[50px]">
-                    <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0">
-                        <input type="radio" name="productGrowth" id="productGrowth"
+                    <div :key="team.id" v-for="team in teams?.result.data" class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0">
+                        <input @click="employeeTeam(team.id)" type="radio" name="productGrowth" id="productGrowth"
                                class="absolute inset-0 checked:ring-2 ring-primary rounded-[26px] appearance-none">
-                        <img src="/assets/svgs/ric-box.svg" alt="">
+                        <img :src="team.icon" alt="">
                         <div class="mt-6 mb-1 font-semibold text-center text-dark">
-                            Product Growth
+                            {{ team.name }}
                         </div>
                         <p class="text-center text-grey">
-                            810 People
-                        </p>
-                    </div>
-                    <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0">
-                        <input type="radio" name="marketing" id="marketing"
-                               class="absolute inset-0 checked:ring-2 ring-primary rounded-[26px] appearance-none">
-                        <img src="/assets/svgs/ric-target.svg" alt="">
-                        <div class="mt-6 mb-1 font-semibold text-center text-dark">
-                            Marketing
-                        </div>
-                        <p class="text-center text-grey">
-                            15,810 People
-                        </p>
-                    </div>
-                    <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0">
-                        <input type="radio" name="globalization" id="globalization"
-                               class="absolute inset-0 checked:ring-2 ring-primary rounded-[26px] appearance-none">
-                        <img src="/assets/svgs/ric-globe.svg" alt="">
-                        <div class="mt-6 mb-1 font-semibold text-center text-dark">
-                            Globalization
-                        </div>
-                        <p class="text-center text-grey">
-                            300 People
-                        </p>
-                    </div>
-                    <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0">
-                        <input type="radio" name="gamification" id="gamification"
-                               class="absolute inset-0 checked:ring-2 ring-primary rounded-[26px] appearance-none">
-                        <img src="/assets/svgs/ric-award.svg" alt="">
-                        <div class="mt-6 mb-1 font-semibold text-center text-dark">
-                            Gamification
-                        </div>
-                        <p class="text-center text-grey">
-                            25 People
+                            {{ team.employees_count }} People
                         </p>
                     </div>
                 </div>
                 <div class="flex justify-center">
-                    <a href="employees.html" id="continueBtn" class="hidden btn btn-primary">
+                    <NuxtLink :to="{ name: 'employee-finish'}" id="continueBtn" class="btn btn-primary">
                         Continue
-                    </a>
+                    </NuxtLink>
                 </div>
             </form>
         </section>

@@ -3,6 +3,12 @@ definePageMeta({
     name: 'employee-finish',
     layout: 'form'
 })
+const employeeStore = useEmployeeStore()
+const photoUrl = employeeStore.employeePayload.photo ? URL.createObjectURL(employeeStore.employeePayload.photo) : undefined
+
+function createEmployee() {
+    employeeStore.handleCreateEmployee();
+}
 </script>
 
 <template>
@@ -16,21 +22,21 @@ definePageMeta({
         </p>
         <form class="w-full card">
             <div class="flex flex-col items-center mb-[14px]">
-                <img src="/assets/images/user-f-1.png" width="70" alt="">
+                <img :src="photoUrl" width="70" alt="">
                 <div class="mt-6 mb-1 text-lg font-semibold">
-                    Andini Danna
+                    {{ employeeStore.employeePayload.name }}
                 </div>
                 <p class="text-base text-grey">
-                    ke@manasihhbang.com
+                    {{ employeeStore.employeePayload.email }}
                 </p>
             </div>
             <div class="form-group">
                 <label for="" class="text-grey">Phone Number</label>
-                <input type="number" class="input-field">
+                <input v-model="employeeStore.employeePayload.phone" type="text" class="input-field">
             </div>
-            <a href="employee_create-3.html" class="w-full btn btn-primary mt-[14px]">
-                Continue
-            </a>
+            <button @click.prevent="createEmployee" class="w-full btn btn-primary mt-[14px]">
+                Create Employee
+            </button>
         </form>
     </section>
 </template>

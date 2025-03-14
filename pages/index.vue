@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const selectedCompany = ref()
-const { data:companies, status } = await usePreFetch<ApiResponse<CompanyFetchResult>>('/company',{
+const { data:companies, status } = await usePreFetch<ApiResponse<Company>>('/company',{
     params: {
         limit: 100
     },
